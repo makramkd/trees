@@ -82,4 +82,20 @@ public class BinarySearchTree {
         }
         return node;
     }
+
+    /*
+    The successor of a node N is the node with the smallest key greater than N.key.
+     */
+    public TreeNode successor(TreeNode node) {
+        if (node.right != null) {
+            return minimumNode(node.right);
+        }
+        TreeNode succ = node.parent;
+        while (succ != null && node == succ.right) {
+            node = succ;
+            succ = succ.parent;
+        }
+
+        return succ;
+    }
 }

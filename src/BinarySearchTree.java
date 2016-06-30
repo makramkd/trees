@@ -58,7 +58,7 @@ public class BinarySearchTree {
 
     private TreeNode minimumNode(TreeNode node) {
         if (node == null){
-            return node;
+            return null;
         }
         while (node.left != null) {
             node = node.left;
@@ -75,7 +75,7 @@ public class BinarySearchTree {
 
     private TreeNode maximumNode(TreeNode node) {
         if (node == null) {
-            return node;
+            return null;
         }
         while (node.right != null) {
             node = node.right;

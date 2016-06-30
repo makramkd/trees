@@ -9,10 +9,16 @@ public class BinarySearchTree {
     private TreeNode root;
 
     /*
+    The number of nodes stored in the tree.
+     */
+    private int size;
+
+    /*
     Construct an empty binary search tree.
      */
     public BinarySearchTree() {
         this.root = null;
+        this.size = 0;
     }
 
     /*
@@ -36,6 +42,7 @@ public class BinarySearchTree {
         } else {
             trailingNode.right = node;
         }
+        ++size;
     }
 
     /*
@@ -61,6 +68,7 @@ public class BinarySearchTree {
             minimum.left = toDelete.left;
             minimum.left.parent = minimum;
         }
+        --size;
     }
 
     /*

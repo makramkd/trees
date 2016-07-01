@@ -27,6 +27,13 @@ public class RedBlackTree {
     }
 
     /*
+    Return the number of nodes in the search tree.
+     */
+    public int size() {
+        return size;
+    }
+
+    /*
     Precondition: x.right is not nil and that the root's parent
     is nil.
      */
@@ -92,6 +99,7 @@ public class RedBlackTree {
         z.right = nil;
         z.color = RedBlackNode.RED;
         insertFixup(z);
+        ++size;
     }
 
     private void insertFixup(RedBlackNode z) {

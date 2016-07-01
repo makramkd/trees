@@ -4,11 +4,11 @@
 public class Main {
 
     public static void main(String[] args) {
-        BinarySearchTree bst = new BinarySearchTree();
-        bst.add(1);
-        bst.add(2);
-        bst.add(-1);
-        bst.add(-3);
-        bst.inorderWalk();
+        RedBlackTree tree = new RedBlackTree();
+        tree.add(1);
+        tree.add(-1);
+        tree.add(2);
+        tree.add(-3);
+        tree.inorderWalk();
     }
 }

@@ -98,11 +98,11 @@ public class RedBlackTree {
         z.left = nil;
         z.right = nil;
         z.color = RedBlackNode.RED;
-        insertFixup(z);
+        addFixup(z);
         ++size;
     }
 
-    private void insertFixup(RedBlackNode z) {
+    private void addFixup(RedBlackNode z) {
         while (z.parent.color == RedBlackNode.RED) {
             if (z.parent == z.parent.parent.left) {
                 RedBlackNode y = z.parent.parent.right;
@@ -136,6 +136,8 @@ public class RedBlackTree {
         }
         root.color = RedBlackNode.BLACK;
     }
+
+
 
     /*
     Walk the binary search tree in order: meaning that the elements

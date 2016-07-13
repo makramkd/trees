@@ -137,7 +137,104 @@ public class RedBlackTree {
         root.color = RedBlackNode.BLACK;
     }
 
+    public void delete(int key) {
+        RedBlackNode z = search(key);
+        if (z == nil) {
+            return;
+        }
+        int yOriginalColor = z.color;
+        if (z.left == nil) {
+            RedBlackNode x = z.right;
+            displace(z, z.right);
+        } else if (z.right == nil) {
+            RedBlackNode x = z.left;
+            displace(z, z.left);
+        } else {
+            RedBlackNode y = minimumNode(z.right);
+            yOriginalColor = y.color;
+            RedBlackNode x = y.right;
+            if (y.parent == z) {
+                x.parent = y;
+            } else {
+                displace(y, y.right);
+                y.right = z.right;
+                y.right.parent = y;
+            }
+            displace(z, y);
+            y.left = z.left;
+            y.left.parent = y;
+            y.color = z.color;
 
+            if (yOriginalColor == RedBlackNode.BLACK) {
+                deleteFixup(x);
+            }
+        }
+    }
+
+    private void deleteFixup(RedBlackNode x) {
+        while (x != root && x.color == RedBlackNode.BLACK) {
+            if (x == x.parent.left) {
+                RedBlackNode w = x.parent.right;
+                if (w.color == RedBlackNode.RED) {
+                    w.color = RedBlackNode.BLACK;
+                    x.parent.color = RedBlackNode.RED;
+                    leftRotate(x.parent);
+                    w = x.parent.right;
+                }
+                if (w.left.color == RedBlackNode.BLACK && w.right.color == RedBlackNode.BLACK) {
+                    w.color = RedBlackNode.RED;
+                    x = x.parent;
+                } else if (w.right.color == RedBlackNode.BLACK) {
+                    w.left.color = RedBlackNode.BLACK;
+                    w.color = RedBlackNode.RED;
+                    rightRotate(w);
+                    w = x.parent.right;
+                }
+                w.color = x.parent.color;
+                x.parent.color = RedBlackNode.BLACK;
+                w.right.color = RedBlackNode.BLACK;
+                leftRotate(x.parent);
+                x = root;
+            } else {
+                RedBlackNode w = x.parent.left;
+                if (w.color == RedBlackNode.RED) {
+                    w.color = RedBlackNode.BLACK;
+                    x.parent.color = RedBlackNode.RED;
+                    leftRotate(x.parent);
+                    w = x.parent.left;
+                }
+                if (w.left.color == RedBlackNode.BLACK && w.right.color == RedBlackNode.BLACK) {
+                    w.color = RedBlackNode.RED;
+                    x = x.parent;
+                } else if (w.left.color == RedBlackNode.BLACK) {
+                    w.left.color = RedBlackNode.BLACK;
+                    w.color = RedBlackNode.RED;
+                    rightRotate(w);
+                    w = x.parent.left;
+                }
+                w.color = x.parent.color;
+                x.parent.color = RedBlackNode.BLACK;
+                w.left.color = RedBlackNode.BLACK;
+                leftRotate(x.parent);
+                x = root;
+            }
+        }
+        x.color = RedBlackNode.BLACK;
+    }
+
+    /*
+    Identical to BinarySearchTree.displace, except instead of nulls we are using nils.
+     */
+    private void displace(RedBlackNode u, RedBlackNode v) {
+        if (u.parent == nil) {
+            root = v;
+        } else if (u == u.parent.left) {
+            u.parent.left = v;
+        } else {
+            u.parent.right = v;
+        }
+        v.parent = u.parent;
+    }
 
     /*
     Walk the binary search tree in order: meaning that the elements
